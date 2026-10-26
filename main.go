@@ -1,78 +1,31 @@
 package main
 
-import (
-	"errors"
-	"fmt"
-)
+import "fmt"
 
-func suma(a, b int) int {
-	return a + b
+//var a = 1 // NO
+
+// * -> puntero a un espacio de memoria
+// & -> direccion de memoria de una variable
+// Copia los argumentos por valor, no por referencia
+
+// referencia de nombre "a" que apunta a un espacio de memoria que contiene el valor 1
+func incrementar(numero *int) {
+	// Nunca modificamos el argumento, sino el elemento al que apunta el puntero
+	*numero++
 }
 
-//funcion que devuelve mas de 1 valor
-
-func dividir(a, b float64) (float64, error) {
-	if b == 0 {
-		error := errors.New("no se puede dividir por 0")
-		return 0, error
-	}
-
-	conciente := a / b
-
-	return conciente, nil
-}
-
-// funcion que recibe un numero indeterminado de argumentos
-func imprimirNombres(nombres ...string) {
-
-	for _, nombre := range nombres {
-		fmt.Println(nombre)
-	}
-}
-
-// ejemplo de closure
-func contador() func() int {
-	c := 0
-	return func() int {
-		c++
-		return c
-	}
-}
-
-type Rectangulo struct {
-	Base, Altura float64
-}
-
-func (r Rectangulo) Area() float64 {
-	return r.Altura * r.Base
-}
-
-func (r Rectangulo) Escalar(factor float64) Rectangulo {
-	return Rectangulo{
-		Base:   r.Base * factor,
-		Altura: r.Altura * factor,
-	}
-}
+// Queremos modificar el elemento original
 
 func main() {
-	conciente, error := dividir(10, 5)
-	if error != nil {
-		fmt.Println(error.Error())
-		return
-	}
-	fmt.Println("El conciente es: ", conciente)
+	valor := 10
+	fmt.Println("Valor antes de incrementar:", valor)
+	incrementar(&valor)
+	fmt.Println("Valor del puntero:", &valor)
+	fmt.Println("Valor despues de incrementar:", valor)
 
-	imprimirNombres("Juan", "Pedro", "Maria")
+	// new()
+	puntero := new(int)
+	fmt.Println("ubicación de memoria inicial con new():", puntero)
+	fmt.Println("valor inicial con new():", *puntero)
 
-	cont := contador()
-	fmt.Println("Contador:", cont())
-	fmt.Println("Contador:", cont())
-	fmt.Println("Contador:", cont())
-
-	rect := Rectangulo{Base: 10, Altura: 5}
-	fmt.Println("Area:", rect.Area())
-
-	escalado := rect.Escalar(3)
-	fmt.Println("Base escalada:", escalado.Base, "Altura escalada:", escalado.Altura)
-	fmt.Println("Area escalada:", escalado.Area())
 }
