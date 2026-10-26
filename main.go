@@ -1,31 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
-//var a = 1 // NO
+// Las interfaces no se implementa, solo se cumplen
 
-// * -> puntero a un espacio de memoria
-// & -> direccion de memoria de una variable
-// Copia los argumentos por valor, no por referencia
-
-// referencia de nombre "a" que apunta a un espacio de memoria que contiene el valor 1
-func incrementar(numero *int) {
-	// Nunca modificamos el argumento, sino el elemento al que apunta el puntero
-	*numero++
+type Forma interface {
+	Area() float64
 }
 
-// Queremos modificar el elemento original
+type Circulo struct {
+	Radio float64
+}
+
+func (c Circulo) Area() float64 {
+	return math.Pi * c.Radio * c.Radio
+}
+
+func imprimirArea(f Forma) {
+	fmt.Printf("El area es: %.2f\n", f.Area())
+}
 
 func main() {
-	valor := 10
-	fmt.Println("Valor antes de incrementar:", valor)
-	incrementar(&valor)
-	fmt.Println("Valor del puntero:", &valor)
-	fmt.Println("Valor despues de incrementar:", valor)
-
-	// new()
-	puntero := new(int)
-	fmt.Println("ubicación de memoria inicial con new():", puntero)
-	fmt.Println("valor inicial con new():", *puntero)
-
+	c := Circulo{Radio: 2}
+	imprimirArea(c)
 }
