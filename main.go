@@ -1,60 +1,32 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
+
+func suma(a, b int) int {
+	return a + b
+}
+
+//funcion que devuelve mas de 1 valor
+
+func dividir(a, b float64) (float64, error) {
+	if b == 0 {
+		error := errors.New("no se puede dividir por 0")
+		return 0, error
+	}
+
+	conciente := a / b
+
+	return conciente, nil
+}
 
 func main() {
-	defer fmt.Println("Termina")
-	//Condicional
-	// Assertiva
-	edad := 20
-	if edad < 18 {
-		fmt.Println("Eres menor de edad")
+	conciente, error := dividir(10, 0)
+	if error != nil {
+		fmt.Println(error.Error())
 		return
 	}
-
-	fmt.Println("Eres mayor de edad")
-
-	// Bucle clasico
-	for i := 0; i < 10; i++ {
-		//fmt.Println("El valor de i es: ", i)
-		fmt.Printf("El valor de i es: %d\n", i)
-	}
-
-	// Bucle while
-	j := 0
-	for j < 10 {
-		fmt.Printf("El valor de j es: %d\n", j)
-		j++
-	}
-
-	// Bucle infinito
-	s := 0
-	for {
-		s++
-
-		if s == 5 {
-			continue
-		}
-
-		fmt.Printf("El valor de s es: %d\n", s)
-		if s == 10 {
-			break
-		}
-	}
-
-	// Bucle range
-	numeros := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	for indice, valor := range numeros {
-		fmt.Printf("El valor de indice es: %d y el valor es: %d\n", indice, valor)
-	}
-
-	// Switch
-	switch edad {
-	case 18:
-		fmt.Println("Eres mayor de edad")
-	case 17:
-		fmt.Println("Eres menor de edad")
-	default:
-		fmt.Println("No tienes edad")
-	}
+	fmt.Println("El conciente es: ", conciente)
 }
